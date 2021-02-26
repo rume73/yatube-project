@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block header %}{% endblock %}
+{% block title %}Пост {{ author }}{% endblock %}
+{% block content %}
+{% load user_filters %}
+
+<main role="main" class="container">
+    <div class="row">
+            {% include 'includes/card_author.html' %}
+            <div class="col-md-9">
+                <!-- Начало блока с отдельным постом --> 
+                {% include "includes/post_item.html" with post=post %}
+                <!-- Конец блока с отдельным постом --> 
+                {% include "includes/comments.html" %}
+            </div>
+    </div>
+</main>
+
+{% endblock %} 

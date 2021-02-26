@@ -1,0 +1,52 @@
+{% extends "base.html" %} 
+{% block header %}{% if tech_info %}Технологии{% endif %}{% endblock %} 
+{% block title %}{% if about_info %}Об авторе проекта{% else %}Технологии{% endif %}{% endblock %} 
+{% block content %} 
+{% load user_filters %} 
+  <main role="main" class="container"> 
+    <div class="row">
+        {% if about_info %}
+      <!-- Левый вспомогательный блок --> 
+      <div class="col-md-3 mb-3 mt-1"> 
+        <div class="card"> 
+          <div class="card-body"> 
+            <ul class="list-group list-group-flush"> 
+              <li class="list-group-item"> 
+                <div class="h3"> 
+                  Об авторе 
+                </div>  
+              </li> 
+              <li class="list-group-item"> 
+                <div class="h6 text-muted">
+                    <p>{{ author_info }}</p>
+                    <a class="p-2 text-dark" href="https://github.com/rume73">Аккаунт в Github</a> 
+                </div> 
+              </li> 
+            </ul>                                                
+          </div>                     
+        </div>                 
+      </div>
+      {% endif %}
+      <!-- Тело страницы --> 
+      <div class="col-md-9"> 
+        <div class="card-body">                     
+          <div class="card-text">
+            {% if about_info %}
+                <ul>
+                    {% for info in about_info %}
+                    <li> {{ info }} </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <ul>
+                    {% for tech in tech_info %}
+                    <li> {{ tech }} </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+          </div>                     
+        </div>                 
+      </div>             
+    </div>         
+  </main> 
+{% endblock %}

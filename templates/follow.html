@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Избранные авторы{% endblock %}
+{% block header %}{% endblock %}
+
+{% block content %}
+    <div class="container">
+           
+           {% include "includes/menu.html" with follow=True %}
+
+           <h1>Избранные авторы</h1>
+                {% for post in page %}
+                    {% include "includes/post_item.html" with post=post %}
+                {% endfor %}
+       
+        </div>
+
+        {% if page.has_other_pages %}
+            {% include "includes/paginator.html" with items=page paginator=paginator%}
+        {% endif %}
+
+{% endblock %}

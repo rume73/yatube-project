@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ author.get_full_name }}{% endblock %}
+{% block header %}{% endblock %}
+{% block content %}
+{% load user_filters %}
+
+
+<main role="main" class="container">
+    <div class="row">
+        
+                {% include 'includes/card_author.html' with post=post %}
+                 
+                <div class="col-md-9">
+                {% for post in page %}
+                {% include "includes/post_item.html" with post=post %}
+                {% endfor %} 
+            </div>
+    </div>
+</main>
+
+    {% if page.has_other_pages %}
+        {% include "includes/paginator.html" with items=page paginator=paginator %}
+    {% endif %}
+
+{% endblock %}
