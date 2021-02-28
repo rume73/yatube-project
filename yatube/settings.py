@@ -23,14 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*2)8szhxxq_*h8vks16g441-t%pj!&j**igm3lkzp3ufum^x!g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "[::1]",
-    "testserver",
-]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", "testserver",]
+#ALLOWED_HOSTS = ['rume73.pythonanywhere.com']
 
 CACHES = {
     'default': {
@@ -72,9 +68,11 @@ ROOT_URLCONF = 'yatube.urls'
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+#STATIC_ROOT = "home/rume73/my-first-project/static"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_ROOT = "home/rume73/my-first-project/media"
 
 # Login
 
@@ -86,6 +84,7 @@ LOGOUT_REDIRECT_URL = "posts:index"
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 # указываем директорию, в которую будут складываться файлы писем
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+#EMAIL_FILE_PATH = "home/rume73/my-first-project/sent_emails"
 
 TEMPLATES = [
     {
@@ -113,6 +112,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #'NAME': "home/rume73/my-first-project/db.sqlite3,
     }
 }
 

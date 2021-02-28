@@ -17,12 +17,6 @@ __pycache__/
 
 .vscode/
 
-media/
-sent_emails/
-static/
-posts/static/
-
-db.sqlite3
 .flake8
 
 htmlcov/
