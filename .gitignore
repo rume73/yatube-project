@@ -15,6 +15,15 @@ __pycache__/
 *.sublime-project
 *.sublime-workspace
 
+media/cache
+media/posts
+
+static/admin
+static/bootstrap
+static/debug_toolbar
+static/jquery
+static/popper.js
+
 .vscode/
 
 .flake8

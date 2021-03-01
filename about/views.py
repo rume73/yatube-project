@@ -6,7 +6,7 @@ class AboutAuthorView(TemplateView):
 
     def get_context_data(self, **kwargs):
         about_info = (
-            "Автор социальной сети Явдомике",
+            "Автор социальной сети Inhome",
             "Инженер головного исптательного центра Роскосмос",
             "Магистрант в МАИ",
             "Студент Яндекс.Практикум",

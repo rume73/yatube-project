@@ -30,7 +30,7 @@ def group_posts(request, slug):
     context = {
         "page": page,
         "group": group,
-        "paginator": paginator
+        "paginator": paginator,
     }
     return render(request, "group.html", context)
 
@@ -63,7 +63,7 @@ def profile(request, username):
         "author": author,
         "followers_count": followers_count,
         "followings_count": followings_count,
-        "following": following}
+        "following": following,}
     return render(request, "profile.html", context)
 
 
@@ -84,7 +84,7 @@ def post_view(request, username, post_id):
         "comments": comments,
         "followers_count": followers_count,
         "followings_count": followings_count,
-        "following": following}
+        "following": following,}
     return render(request, "post.html", context)
 
 
