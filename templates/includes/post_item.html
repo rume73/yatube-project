@@ -26,13 +26,12 @@
       
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group">
-          {% if post.comments.exists %}
           <div>
+          {% if post.comments.exists %}
           <a class="btn btn-outline-light btn-sm">
             Комментариев: <span class="badge badge-primary">{{ post.comments.count }}</span>
           </a>
           {% endif %}
-          
           <a class="btn btn-outline-primary btn-sm" href="{% url 'posts:post' post.author.username post.id %}" role="button">
             Комментировать
           </a>
