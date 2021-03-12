@@ -17,6 +17,7 @@ def index(request):
     context = {
         "page": page,
         "paginator": paginator,
+        "post_view": False,
     }
     return render(request, "index.html", context)
 
@@ -31,6 +32,7 @@ def group_posts(request, slug):
         "page": page,
         "group": group,
         "paginator": paginator,
+        "post_view": False,
     }
     return render(request, "group.html", context)
 
@@ -63,7 +65,8 @@ def profile(request, username):
         "author": author,
         "followers_count": followers_count,
         "followings_count": followings_count,
-        "following": following,}
+        "following": following,
+        "post_view": False,}
     return render(request, "profile.html", context)
 
 
@@ -84,7 +87,9 @@ def post_view(request, username, post_id):
         "comments": comments,
         "followers_count": followers_count,
         "followings_count": followings_count,
-        "following": following,}
+        "following": following,
+        "show_form": False,
+        "post_view": True,}
     return render(request, "post.html", context)
 
 
@@ -103,17 +108,49 @@ def post_edit(request, username, post_id):
 
 
 @login_required
+def post_delete(request, username, post_id):
+    try:
+        post = get_object_or_404(Post, id=post_id, author__username=username)
+        post.delete()
+        return redirect("posts:profile", username)
+    except Post.DoesNotExist:
+        return render(
+        request,
+        "misc/404.html",
+        {"path": request.path},
+        status=404
+    )
+
+
+@login_required
 def add_comment(request, username, post_id):
     post = Post.objects.get(id=post_id, author__username=username)
     author = post.author
     form = CommentForm(request.POST or None)
+    comments = post.comments.all()
+
+    followers_count = Follow.objects.filter(author=post.author).count()
+    followings_count = Follow.objects.filter(user=post.author).count()
+    following = Follow.objects.filter(user__username=request.user,
+                                      author=post.author)
     if form.is_valid():
         comment = form.save(commit=False)
         comment.author = request.user
         comment.post = post
         comment.save()
-    return redirect(reverse("posts:post", kwargs={
-        "username": author.username, "post_id": post.id}))
+        return redirect(reverse("posts:post", kwargs={
+            "username": author.username, "post_id": post.id}))
+    return render(request, 'post.html', {
+        "form": form,
+        "post": post,
+        "author": post.author,
+        "comments": comments,
+        "followers_count": followers_count,
+        "followings_count": followings_count,
+        "following": following,
+        "show_form": True,
+        "post_view": True,
+        })
 
 
 @login_required

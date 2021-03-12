@@ -24,7 +24,6 @@ SECRET_KEY = '*2)8szhxxq_*h8vks16g441-t%pj!&j**igm3lkzp3ufum^x!g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", "testserver",]
 #ALLOWED_HOSTS = ['rume73.pythonanywhere.com']
 

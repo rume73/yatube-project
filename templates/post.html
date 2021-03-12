@@ -8,8 +8,8 @@
     <div class="row">
             {% include 'includes/card_author.html' %}
             <div class="col-md-9">
-                <!-- Начало блока с отдельным постом --> 
-                {% include "includes/post_item.html" with post=post %}
+                <!-- Начало блока с отдельным постом -->
+                {% include "includes/post_item.html" with add_comments='True' %}
                 <!-- Конец блока с отдельным постом --> 
                 {% include "includes/comments.html" %}
             </div>

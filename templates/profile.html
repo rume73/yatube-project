@@ -11,9 +11,14 @@
                 {% include 'includes/card_author.html' with post=post %}
                  
                 <div class="col-md-9">
-                {% for post in page %}
-                {% include "includes/post_item.html" with post=post %}
-                {% endfor %} 
+                {% if page %}
+                    {% for post in page %}
+                    {% include "includes/post_item.html" with post=post %}
+                    {% endfor %}
+                {% else %}
+                    <br>
+                    <h4>У автора нет постов</h4>
+                {% endif %}
             </div>
     </div>
 </main>

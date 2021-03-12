@@ -32,13 +32,23 @@
             Комментариев: <span class="badge badge-primary">{{ post.comments.count }}</span>
           </a>
           {% endif %}
+          {% if not post_view %}
           <a class="btn btn-outline-primary btn-sm" href="{% url 'posts:post' post.author.username post.id %}" role="button">
+            К посту
+          </a>
+          {% endif %}
+          {% if add_comments %}
+          <a class="btn btn-outline-primary btn-sm" href="{% url 'posts:add_comment' post.author.username post.id %}" role="button">
             Комментировать
           </a>
+          {% endif %}
           <!-- Ссылка на редактирование поста для автора -->
           {% if user == post.author %}
           <a class="btn btn-outline-primary btn-sm" href="{% url 'posts:post_edit' post.author.username post.id %}" role="button">
             Редактировать
+          </a>
+          <a class="btn btn-outline-primary btn-sm" onclick="return confirm('Вы действительно хотите удалить эту запись? Отменить это действие будет невозможно')" href="{% url 'posts:post_delete' post.author.username post.id %}" role="button">
+            Удалить пост
           </a>
           {% endif %}
         </div>
@@ -49,4 +59,4 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>
