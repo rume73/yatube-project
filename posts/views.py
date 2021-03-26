@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.urls import reverse
 
-from .models import Post, Group, User, Follow
+from .models import Comment, Post, Group, User, Follow
 from .forms import PostForm, CommentForm
 
 
@@ -112,7 +112,7 @@ def post_delete(request, username, post_id):
     try:
         post = get_object_or_404(Post, id=post_id, author__username=username)
         post.delete()
-        return redirect("posts:profile", username)
+        return redirect("posts:index")
     except Post.DoesNotExist:
         return render(
         request,
@@ -151,6 +151,25 @@ def add_comment(request, username, post_id):
         "show_form": True,
         "post_view": True,
         })
+
+
+@login_required
+def comment_delete(request, pk, username, post_id):
+    post = Post.objects.get(id=post_id, author__username=username)
+    try:
+        comment = get_object_or_404(Comment, pk=pk, author__username=username)
+        comment.delete()
+        return redirect(reverse("posts:post", kwargs={
+                                "username": post.author.username,
+                                "post_id": post.id}))
+
+    except Comment.DoesNotExist:
+        return render(
+        request,
+        "misc/404.html",
+        {"path": request.path},
+        status=404
+    )
 
 
 @login_required

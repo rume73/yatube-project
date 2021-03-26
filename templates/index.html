@@ -9,14 +9,14 @@
 
         <h1> Последние обновления на сайте</h1>
                 {% load cache %}
-                {% cache 5 sidebar page %}
+                {% cache 1 sidebar page %}
                     {% for post in page %}
                         {% include "includes/post_item.html" with post=post %}
                     {% endfor %}
                 {% endcache %}
-    </div>
         {% if page.has_other_pages %}
             {% include "includes/paginator.html" with items=page paginator=paginator %}
         {% endif %}
+    </div>
 
 {% endblock %}

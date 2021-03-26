@@ -1,9 +1,9 @@
 <!-- Форма добавления комментария -->
 {% load user_filters %}
 
-{% if user.is_authenticated  and show_form %}
+{% if user.is_authenticated %}
 <div class="card my-4">
-    <form method="post" action="{% url 'posts:add_comment' post.author.username post.id %}">
+    <form id="form_hide" style="display:none" method="post" action="{% url 'posts:add_comment' post.author.username post.id %}">
         {% csrf_token %}
         <h5 class="card-header">Добавить комментарий:</h5>
         <div class="card-body">
@@ -28,6 +28,11 @@
         </h5>
         <p>{{ post.text | linebreaksbr }}</p>
         <small class="text-muted">{{ post.created }}</small>
+        {% if user == post.author %}
+          <a class="btn btn-outline-primary btn-sm" onclick="return confirm('Вы действительно хотите удалить комментарий? Отменить это действие будет невозможно')" href="{% url 'posts:comment_delete' post.author.username post.id %}" role="button">
+            Удалить комментарий
+          </a>
+        {% endif %}
     </div>
 </div>
 {% endfor %}

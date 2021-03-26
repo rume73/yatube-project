@@ -2,7 +2,7 @@
 
     <!-- Отображение картинки -->
     {% load thumbnail %}
-    {% thumbnail post.image "1200x900" crop="center" upscale=True as im %}
+    {% thumbnail post.image "1200x700" crop="center" upscale=True as im %}
     <img class="card-img" src="{{ im.url }}" />
     {% endthumbnail %}
     <!-- Отображение текста поста -->
@@ -37,11 +37,17 @@
             К посту
           </a>
           {% endif %}
+
           {% if add_comments %}
-          <a class="btn btn-outline-primary btn-sm" href="{% url 'posts:add_comment' post.author.username post.id %}" role="button">
+          <button class="btn btn-outline-primary btn-sm" id="first" onclick="first();">
             Комментировать
-          </a>
+          </button>
+          <button class="btn btn-outline-primary btn-sm"; style="display:none" id="second" onclick="second();">
+            Убрать форму
+          </button>
+          {% include "includes/script_form.js" %}
           {% endif %}
+  
           <!-- Ссылка на редактирование поста для автора -->
           {% if user == post.author %}
           <a class="btn btn-outline-primary btn-sm" href="{% url 'posts:post_edit' post.author.username post.id %}" role="button">

@@ -19,12 +19,12 @@
                     <br>
                     <h4>У автора нет постов</h4>
                 {% endif %}
-            </div>
+            
+                {% if page.has_other_pages %}
+                    {% include "includes/paginator.html" with items=page paginator=paginator %}
+                {% endif %}
+                </div>
     </div>
 </main>
-
-    {% if page.has_other_pages %}
-        {% include "includes/paginator.html" with items=page paginator=paginator %}
-    {% endif %}
 
 {% endblock %}
