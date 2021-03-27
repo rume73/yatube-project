@@ -154,25 +154,6 @@ def add_comment(request, username, post_id):
 
 
 @login_required
-def comment_delete(request, pk, username, post_id):
-    post = Post.objects.get(id=post_id, author__username=username)
-    try:
-        comment = get_object_or_404(Comment, pk=pk, author__username=username)
-        comment.delete()
-        return redirect(reverse("posts:post", kwargs={
-                                "username": post.author.username,
-                                "post_id": post.id}))
-
-    except Comment.DoesNotExist:
-        return render(
-        request,
-        "misc/404.html",
-        {"path": request.path},
-        status=404
-    )
-
-
-@login_required
 def follow_index(request):
     post_list = Post.objects.filter(author__following__user=request.user)
     paginator = Paginator(post_list, settings.DEFAULT_POSTS_PER_PAGE)
