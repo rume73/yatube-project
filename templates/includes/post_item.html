@@ -1,4 +1,4 @@
-<div class="card mb-3 mt-1 shadow-sm">
+<div class="card mb-3 mt-1 shadow">
 
     <!-- Отображение картинки -->
     {% load thumbnail %}
@@ -17,9 +17,11 @@
   
       <!-- Если пост относится к какому-нибудь сообществу, то отобразим ссылку на него через # -->
       {% if post.group %}
-      <a class="card-link muted" href="{% url 'posts:group' post.group.slug %}">
-        <strong class="d-block text-gray-dark">#{{ post.group.title }}</strong>
-      </a>
+      <p>
+        <a class="card-link muted" href="{% url 'posts:group' post.group.slug %}">
+          <strong class="d-block text-gray-dark">#{{ post.group.title }}</strong>
+        </a>
+      </p>
       {% endif %}
   
       <!-- Отображение ссылки на комментарии -->
@@ -38,7 +40,7 @@
           </a>
           {% endif %}
 
-          {% if add_comments %}
+          {% if add_comments and user.is_authenticated %}
           <button class="btn btn-outline-primary btn-sm" id="first" onclick="first();">
             Комментировать
           </button>

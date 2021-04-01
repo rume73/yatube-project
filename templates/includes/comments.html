@@ -2,7 +2,7 @@
 {% load user_filters %}
 
 {% if user.is_authenticated %}
-<div class="card my-4">
+<div class="card my-4 shadow">
     <form id="form_hide" style="display:none" method="post" action="{% url 'posts:add_comment' post.author.username post.id %}">
         {% csrf_token %}
         <h5 class="card-header">Добавить комментарий:</h5>
@@ -18,16 +18,16 @@
 
 <!-- Комментарии -->
 {% for post in comments %}
-<div class="media card mb-4">
+<div class="media card mb-4 shadow">
     <div class="media-body card-body">
-        <h5 class="mt-0">
+        <p>{{ post.text | linebreaksbr }}</p>
+        <div class="text-muted">
             <a href="{% url 'posts:profile' post.author.username %}"
                name="comment_{{ post.id }}">
                 @{{ post.author.username }}
             </a>
-        </h5>
-        <p>{{ post.text | linebreaksbr }}</p>
-        <small class="text-muted">{{ post.created }}</small>
+        <small class="text-muted"> - {{ post.created }}</small>
+        </div>
     </div>
 </div>
 {% endfor %}
