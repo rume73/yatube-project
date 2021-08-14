@@ -1,0 +1,35 @@
+{% extends "base.html" %} 
+{% block title %} Все авторы {% endblock %}
+{% block header %}{% endblock %}
+{% block content %}
+
+<div id="wrapper">
+  <h2 style="font-size:20px;">Все авторы {% if user.is_authenticated %}| <a href="{% url 'posts:profile' request.user.username %}">Моя страница</a>{% endif %}</h2>
+
+{% for author in page %}
+
+
+<div class="title">
+  {% load thumbnail %} {% thumbnail author.profile.image "960x960" crop="center" upscale=True as im %}
+  {% if author.profile.image != null %}
+    <img style="border-radius: 100px; width: 4em; margin-right:20px;" align="left" 
+    vspace="5" hspace="5" src="{{ im.url }}" />
+    {% else %}
+    {% load static %}
+    <img style="border-radius: 100px; width: 4em; margin-right:20px;" align="left" 
+    vspace="5" hspace="5" src="{% static "default.jpg" %}" />
+  {% endif %}
+  {% endthumbnail %}
+  <h2><a href="{% url 'posts:profile' author.username %}">{{ author.username }}</a></h2>
+
+  <h5 class="published">{{ author.get_full_name |linebreaksbr }}</h5>
+  {% if not forloop.last %}<hr>{% endif %}
+</div>
+
+{% endfor%}
+  {% if page.has_other_pages %}
+    {% include "includes/paginator.html" with items=page paginator=paginator%}
+  {% endif %} </div>
+
+  </div></div>
+{% endblock %}

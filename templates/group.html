@@ -6,7 +6,6 @@
 {% block content %}
 <h2>{{ group.title }}</h2>
 <p>{{ group.description }}</p>
-   <div class="container">
                 {% for post in page %}
 
                     {% include "includes/post_item.html" with post=post %}
@@ -15,5 +14,4 @@
         {% if page.has_other_pages %}
             {% include "includes/paginator.html" with items=page paginator=paginator %}
         {% endif %}
-    </div>
 {% endblock %}

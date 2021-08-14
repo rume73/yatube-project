@@ -1,0 +1,21 @@
+<div class="container">
+<div class="row">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link {% if followers_menu %}active{% endif %}" href="{% url 'posts:followers' author.username %}">
+                  Подписчики {{ author.username }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if following %}active{% endif %}" href="{% url 'posts:following' author.username %}">
+                  Подписки {{ author.username }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if all_authors %}active{% endif %}" href="{% url 'posts:all_authors' %}">
+                  Все авторы
+            </a>
+        </li>
+    </ul>
+</div>
+</div>

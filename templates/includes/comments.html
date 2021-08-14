@@ -20,7 +20,7 @@
 {% for post in comments %}
 <div class="media card mb-4 shadow">
     <div class="media-body card-body">
-        <p>{{ post.text | linebreaksbr }}</p>
+        <p>{{ post.text | linebreaksbr|urlize }}</p>
         <div class="text-muted">
             <a href="{% url 'posts:profile' post.author.username %}"
                name="comment_{{ post.id }}">

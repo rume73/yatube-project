@@ -1,19 +1,39 @@
-<div class="sticky-top">
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-    <div class="h6 text-muted"> 
-        <a class="navbar-brand" href="{% url 'posts:index' %}"><span style="color:#FF1493">In</span>home</a>
-        <small>beta: v1.2.2</small>
-    </div>    
-    <nav class="my-2 my-md-0 mr-md-3">
+<div class="container sticky-top">
+    <nav class="navbar navbar-light rounded-bottom" style="background-color: #e3f2fd;" >
+        <div class="h6 text-muted"> 
+            <a class="navbar-brand" href="{% url 'posts:index' %}"><span style="color:#FF1493">In</span>home</a>
+        </div>    
+
         {% if user.is_authenticated %}
-        <a class="p-2 text-dark" href="{% url 'posts:new_post' %}">Добавить запись</a>
-        Пользователь:<a class="p-2 text-dark" href="{% url 'posts:profile' user.username %}">{{ user.username }}.</a>
-        <a class="p-2 text-dark" href="{% url 'password_change' %}">Изменить пароль</a>
-        <a class="p-2 text-dark" href="{% url 'logout' %}">Выйти</a>
-        {% else %}
-        <a class="p-2 text-dark" href="{% url 'login' %}">Войти</a> |
-        <a class="p-2 text-dark" href="{% url 'signup' %}">Регистрация</a>
-        {% endif %}
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ user.username }}
+            </button>   
+            <div class="dropdown-menu dropdown-menu-right">
+                  <!-- <form class="search" method="get" action="{% url 'posts:search_results' %}">
+                    <input class="form-control mr-sm-2" type="text" name="q" placeholder="Найти" />
+                  </form>
+                  <div class="dropdown-divider"></div> -->
+                <a class="dropdown-item" href="{% url 'posts:profile' user.username %}">Моя страница</a>
+                <a class="dropdown-item" href="{% url 'posts:new_post' %}">Новая запись</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'posts:profile_settings' %}">Изменить профиль</a>
+                <a class="dropdown-item" href="{% url 'password_change' %}">Изменить пароль</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'posts:followers' user.username %}">Мои подписчики</a>
+                <a class="dropdown-item" href="{% url 'posts:following' user.username %}">Мои подписки</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'posts:all_authors' %}">Все авторы</a>
+                <a class="dropdown-item" href="{% url 'posts:all_groups' %}">Все группы</a> 
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'logout' %}">Выйти</a>
+            </div>
+          </div>
+          {% else %}
+          <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="{% url 'login' %}">Войти</a> |
+            <a class="p-2 text-dark" href="{% url 'signup' %}">Регистрация</a>
+        </nav>
+          {% endif %}
     </nav>
-</nav>
-</div>
+    </div>

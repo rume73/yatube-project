@@ -35,6 +35,9 @@ class Group(models.Model):
                             "и знаки подчёркивания")
     description = models.TextField("Описание", null=True, blank=True,
                                    help_text="Введите описание группы")
+    creator = models.ForeignKey(User, verbose_name='Создатель группы',
+                                on_delete=models.SET_NULL, blank=True,
+                                null=True)
 
     def __str__(self):
         return self.title
@@ -57,7 +60,7 @@ class Comment(models.Model):
         return self.text[:15]
 
     class Meta:
-        ordering = ["-created"]
+        ordering = ["created"]
         verbose_name = "комментарий"
         verbose_name_plural = "Комментарии"
 
@@ -70,7 +73,23 @@ class Follow(models.Model):
                                verbose_name="Подписка")
 
     class Meta:
-        db_table = 'Follow'
-        constraints = [models.UniqueConstraint(fields=['user', 'author'],
-                                               name='unique follow')]
+        db_table = "Follow"
+        constraints = [models.UniqueConstraint(fields=["user", "author"],
+                                               name="unique follow")]
         verbose_name_plural = "Подписки"
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=500, blank=True,
+                           verbose_name="Описание профиля")
+    image = models.ImageField(upload_to="users/", blank=True,
+                              null=True, verbose_name="Аватар")
+    
+
+class Likes(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name="user_likes")
+    post = models.ForeignKey(Post, blank=False, null=False,
+                             on_delete=models.CASCADE,
+                             related_name="likes")

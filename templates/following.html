@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+{% block title %} Подписки {% endblock %}
+{% block header %}{% endblock %}
+{% block content %}
+
+{% include "includes/menu_follow.html" with following=True %}
+
+<h2>Все подписки</h2>
+
+{% for follower in page %}
+    <div class="title">
+        {% load thumbnail %} {% thumbnail follower.author.profile.image "960x960" crop="center" upscale=True as im %}
+            <img style="border-radius: 100px; width: 4em; margin-right:20px;" align="left" 
+            vspace="5" hspace="5" src="{{ im.url }}" /> 
+        {% endthumbnail %}
+        <h3><a href="{% url 'posts:profile' follower.author.username %}">{{ follower.author.username }}</a></h3>
+        <h6 class="published">{{ follower.author.get_full_name |linebreaksbr }}</h6><br>
+    </div>
+    {% if not forloop.last %}<hr>{% endif %}
+{% endfor%}
+
+{% if page.has_other_pages %}
+    {% include "includes/paginator.html" with items=page paginator=paginator%}
+{% endif %} 
+
+{% endblock %}

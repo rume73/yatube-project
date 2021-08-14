@@ -3,7 +3,6 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-    <div class="container">
 
         {% include "includes/menu.html" with index=True %}
 
@@ -17,6 +16,5 @@
         {% if page.has_other_pages %}
             {% include "includes/paginator.html" with items=page paginator=paginator %}
         {% endif %}
-    </div>
 
 {% endblock %}

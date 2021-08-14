@@ -1,0 +1,39 @@
+{% extends "base.html" %} 
+{% block title %} Все группы {% endblock %}
+{% block header %}{% endblock %}
+{% block content %}
+
+    {% include "includes/menu_group.html" with all_groups=True %}
+    <h1>Список всех групп</h1>
+
+{% for group in page%}
+
+<h3> Группа: <a href="{% url 'posts:group' group.slug %}">
+              {{ group.title }}
+            </a>
+        </h3> 
+        <p>{{ group.description|linebreaksbr }}</p>
+    {% if group.creator %}<h6 class='author'> Создатель: <a href="{% url 'posts:profile' group.creator %}" class=""><span class="">{{ group.creator.username}}</a></h6>{% endif %}
+{% if user == group.creator %}
+<ul class="actions">
+  <li>
+      <a class="button large" href="{% url 'posts:group_edit' group.creator.username group.slug %}" role="button">
+        Редактировать
+      </a>
+    </li>
+  <li><a class="button large" href="{% url 'posts:group_delete' group.creator.username group.slug %}" role="button" onclick="return confirm('Вы уверены что хотите удалить группу?')">
+      Удалить группу
+      </a>
+    </li>
+  </ul>
+ {% endif %}
+ {% if not forloop.last %}<hr>{% endif %}
+
+{% endfor %}
+{% if page.has_other_pages %}
+  {% include "includes/paginator.html" with items=page paginator=paginator %}
+{% endif %}
+
+
+
+{% endblock %}

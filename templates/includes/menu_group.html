@@ -1,0 +1,25 @@
+<div class="container">
+<div class="row">
+    <ul class="nav nav-tabs">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link {% if author_groups %}active{% endif %}" href="{% url 'posts:author_groups' request.user.username %}">
+                  Мои группы
+            </a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link {% if all_groups %}active{% endif %}" href="{% url 'posts:all_groups' %}">
+                  Все группы
+            </a>
+        </li>
+        {% if user.is_authenticated %} 
+        <li class="nav-item">
+            <a class="nav-link {% if new_group %}active{% endif %}" href="{% url 'posts:new_group' %}">
+                  Создать группу
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+</div>

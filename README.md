@@ -11,6 +11,20 @@
     + комментировать статьи автора;
 - На главной странице во вкладке "Избранные авторы" отображаются статьи только тех авторов, на которых подписан пользователь
 
+### Запуск проекта (на примере Linux)
+
+Перед тем, как начать: если вы не пользуетесь `Python 3`, вам нужно будет установить инструмент `virtualenv` при помощи `pip install virtualenv`. 
+Если вы используете `Python 3`, у вас уже должен быть модуль [venv](https://docs.python.org/3/library/venv.html), установленный в стандартной библиотеке.
+
+- Создайте на своем компютере папку проекта blog `mkdir blog` и перейдите в нее `cd blog`
+- Склонируйте этот репозиторий в текущую папку `git clone https://github.com/rume73/yatube-project.git`
+- Создайте виртуальное окружение `python3 -m venv venv`
+- Активируйте виртуальное окружение `source venv/bin/activate`
+- Установите зависимости `pip install -r requirements.txt`
+- Накатите миграции `python manage.py migrate`
+- Создайте суперпользователя Django `python manage.py createsuperuser --username admin --email 'admin@example.com'`
+- Запустите сервер разработки Django `python manage.py runserver`
+
 ### В проекте задействован основной функционал django:
 
 - модели, миграции
@@ -20,5 +34,9 @@
 - шаблонизаторы
 - админка
 - тестирование
+
+### Мониторинг доступности и сбор ошибок
+- [UptimeRobot](https://uptimerobot.com)
+- [Sentry](https://sentry.io/)
 
 #### Работающий проект находится по адресу: http://rume73.pythonanywhere.com/

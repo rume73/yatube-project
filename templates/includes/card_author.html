@@ -1,28 +1,68 @@
 <!-- Начало блока об авторе -->
 <div class="col-md-3 mb-3 mt-1">
-        <div class="card">
                 <div class="card-body">
-                <div class="h2">
-                        {{ author.get_full_name }}
+                        {% load thumbnail %}
+                                {% if author.profile.image != null %}
+                                {% thumbnail author.profile.image "960x960" crop="center" upscale=True as im %}
+                                        <img class="card-img" style="border-radius: 120px;" src="{{ im.url }}" />
+                                {% endthumbnail %}
+                                {% else %}
+                                {% load static %}
+                                        <img class="card-img" "960x960" crop="center" style="border-radius: 120px;"  src="{% static "img/default.jpg" %}" />
+                                {% endif %} 
+                                
+                        <div class="h2" align="center">
+                                {{ author.get_full_name }}
+                        </div>
                 </div>
-                <div class="h3 text-muted">
-                        {{ author }}
-                </div>
-                </div>
+                <div class="card">
                 <ul class="list-group list-group-flush">
+                        {% if author.profile.bio != '' %}
+                        <li class="list-group-item">
+                                <div class="h5 text-muted">
+                                        {{ author.profile.bio }}
+                                </div>
+                        </li>
+                        {% else %}
+                        <li class="list-group-item">
+                                <div class="h5 text-muted">
+                                        {{ author }}
+                                </div>
+                        </li>
+                        {% endif %}
                         <li class="list-group-item">
                                 <div class="h6 text-muted">
-                                Подписчиков: {{ followers_count }} <br />
-                                Подписан: {{ followings_count }}
+                                        <a class="h6 text-muted" href="{% url 'posts:followers' author.username %}">Подписчиков:<a/> {{ followers_count }} <br />
+                                        <a class="h6 text-muted" href="{% url 'posts:following' author.username %}">Подписан:<a/> {{ followings_count }}
                                 </div>
                         </li>
                         <li class="list-group-item">
                                 <div class="h6 text-muted">
-                                Записей: {{ author.posts.count }}
+                                        <a class="h6 text-muted" href="{% url 'posts:profile' author.username %}">Записей:<a/> {{ author.posts.count }}
                                 </div>
+                                {% if request.user.id != author.id %}
+                                        <a href="{% url 'posts:author_groups' author.username %}">Группы автора </a>
+                                {% else %}
+                                        <a href="{% url 'posts:author_groups' author.username %}">Мои группы </a>
+                                {% endif %}
                         </li>
+                        {% if request.user.id == author.id%}
+                                <li class="list-group-item">
+                                        <a class="button" href="{% url 'posts:profile_settings' %}" role="button"> Изменить профиль </a>
+                                </li>
+                                <li class="list-group-item">
+                                        <a class="button" href="{% url 'password_change' %}" role="button"> Изменить пароль</a>
+                                </li>
+                                <li class="list-group-item">
+                                        <a class="button" href="{% url 'posts:user_delete' author.username %}"
+                                        role="button" onclick="return confirm('Вы уверены что хотите удалить свой профиль?')"> Удалить профиль </a>
+                                </li>
+                        {% endif %}
                 </ul>
-        </div>
+                </div>
+       
+
+                
         {% if user != author %}
         <!-- Начало блока кнопки "Подписаться/отписаться" -->
         <li class="list-group-item">

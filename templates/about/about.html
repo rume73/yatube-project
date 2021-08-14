@@ -13,15 +13,19 @@
             <ul class="list-group list-group-flush"> 
               <li class="list-group-item"> 
                 <div class="h3"> 
-                  Об авторе 
+                  Об авторе
+                  {% load static %}
+                  <img class="card-img" style="border-radius: 120px;" "720x720" crop="center" src="{% static "img/me.jpg" %}" />
+                  <h3>{{ author_info }}</h3>
                 </div>  
               </li> 
               <li class="list-group-item"> 
                 <div class="h6 text-muted">
-                    <h6>{{ author_info }}</h6>
-                    <a class="p-2 text-dark" href="https://vk.com/rume73">vk</a> 
+                    <a class="p-2 text-dark" href="https://vk.com/rume73">VK</a> 
                     <br>
                     <a class="p-2 text-dark" href="https://www.instagram.com/vladimirumi/">Instagram</a>
+                    <br>
+                    <a class="p-2 text-dark" href="https://github.com/rume73">Git</a>
                 </div> 
               </li> 
             </ul>                                                
