@@ -3,7 +3,6 @@
 {% block title %}{% if about_info %}Об авторе проекта{% else %}Технологии{% endif %}{% endblock %} 
 {% block content %} 
 {% load user_filters %} 
-  <main role="main" class="container"> 
     <div class="row">
         {% if about_info %}
       <!-- Левый вспомогательный блок --> 
@@ -12,8 +11,7 @@
           <div class="card-body"> 
             <ul class="list-group list-group-flush"> 
               <li class="list-group-item"> 
-                <div class="h3"> 
-                  Об авторе
+                <div class="h3">
                   {% load static %}
                   <img class="card-img" style="border-radius: 120px;" "720x720" crop="center" src="{% static "img/me.jpg" %}" />
                   <h3>{{ author_info }}</h3>
@@ -38,6 +36,7 @@
         <div class="card-body">                     
           <div class="card-text">
             {% if about_info %}
+            <h1>Об авторе</h1>
                 <ul>
                     {% for info in about_info %}
                     <li> {{ info }} </li>
@@ -54,5 +53,4 @@
         </div>                 
       </div>             
     </div>         
-  </main> 
 {% endblock %}

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 
+
+
 User = get_user_model()
 
 
@@ -84,8 +86,8 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True,
                            verbose_name="Описание профиля")
     image = models.ImageField(upload_to="users/", blank=True,
-                              null=True, verbose_name="Аватар")
-    
+                              null=True, verbose_name="Аватар",)
+
 
 class Likes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,

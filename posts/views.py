@@ -64,7 +64,9 @@ def profile(request, username):
     paginator = Paginator(latest, settings.DEFAULT_POSTS_PER_PAGE)
     page_number = request.GET.get("page")
     page = paginator.get_page(page_number)
-
+    is_image = False
+    if Profile.objects.filter(image=None):
+        is_image = True
     followers_count = Follow.objects.filter(author=author).count()
     followings_count = Follow.objects.filter(user=author).count()
     following = Follow.objects.filter(user__username=request.user,
@@ -76,7 +78,8 @@ def profile(request, username):
         "followers_count": followers_count,
         "followings_count": followings_count,
         "following": following,
-        "post_view": False, }
+        "post_view": False,
+        "profile_is_not_image": is_image,}
     return render(request, "profile.html", context)
 
 
@@ -91,6 +94,9 @@ def post_view(request, username, post_id):
     following = Follow.objects.filter(user__username=request.user,
                                       author=post.author)
     likes = post.likes.all()
+    is_liked = False
+    if post.likes.filter(user=request.user.id).exists():
+        is_liked = True
     context = {
         "form": form,
         "post": post,
@@ -101,7 +107,8 @@ def post_view(request, username, post_id):
         "following": following,
         "show_form": False,
         "post_view": True,
-        "likes": likes, }
+        "likes": likes,
+        "post_is_liked": is_liked,}
     return render(request, "post.html", context)
 
 
@@ -276,14 +283,21 @@ def user_delete(request, username):
 
 @login_required
 def likes(request, username, post_id):
+    user = get_object_or_404(User, username=username)
     post = get_object_or_404(Post, id=post_id, author__username=username)
+    is_liked = False
     if post.likes.filter(user=request.user.id).exists():
+        is_liked = True
         Likes.objects.get(user=request.user, post=post).delete()
     else:
         Likes.objects.get_or_create(user=request.user, post=post)
-    prewious_url = request.META.get("HTTP_REFERER")
-    return redirect(prewious_url)
-
+    if user:
+        prewious_url = request.META.get("HTTP_REFERER")
+        return redirect(prewious_url, {"post_is_liked": is_liked})
+    else:
+        return redirect("post_view.html", username=request.user.username,
+                        id=post_id)
+    
 
 def all_authors(request):
     author_list = User.objects.all().order_by('-date_joined')
@@ -291,7 +305,9 @@ def all_authors(request):
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     return render(request, "all_authors.html", {
-        "page": page, "paginator": paginator, "author_list": author_list})
+        "page": page,
+        "paginator": paginator,
+        "author_list": author_list,})
 
 
 def author_groups(request, username):
@@ -302,29 +318,30 @@ def author_groups(request, username):
     page = paginator.get_page(page_number)
     return render(request, "author_groups.html",
                   {"creator": creator, "groups": groups,
-                   "page": page, "paginator": paginator}
-                   )
+                   "page": page, "paginator": paginator})
 
 
 def following(request, username):
-    author = get_object_or_404(User, username=username) 
-    followers = author.follower.all()
-    paginator = Paginator(followers, 20)
+    author = get_object_or_404(User, username=username)
+    following = author.follower.all()
+    paginator = Paginator(following, 20)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    return render(request, "following.html",{
-        "author": author, "followers": followers,
-        "page": page, "paginator": paginator,
+    return render(request, "following.html", {
+        "author": author,
+        "page": page,
+        "paginator": paginator,
     })
 
 
 def followers(request, username):
-    author = get_object_or_404(User, username=username) 
+    author = get_object_or_404(User, username=username)
     followers = author.following.all()
     paginator = Paginator(followers, 20)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    return render(request, "followers.html",{
-        "author": author, "followers": followers,
-        "page": page, "paginator": paginator,
+    return render(request, "followers.html", {
+        "author": author,
+        "page": page, 
+        "paginator": paginator,
     })

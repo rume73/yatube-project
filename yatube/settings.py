@@ -10,7 +10,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", "testserver", ]
-#ALLOWED_HOSTS = ['rume73.pythonanywhere.com']
 
 CACHES = {
     'default': {
@@ -50,11 +49,9 @@ ROOT_URLCONF = 'yatube.urls'
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-#STATIC_ROOT = "home/rume73/my-first-project/static"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-#MEDIA_ROOT = "home/rume73/my-first-project/media"
 
 
 LOGIN_URL = "/auth/login/"
@@ -90,7 +87,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        #'NAME': "home/rume73/my-first-project/db.sqlite3,
     }
 }
 

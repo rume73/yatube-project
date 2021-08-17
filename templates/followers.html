@@ -9,10 +9,15 @@
 
 {% for follower in page %}
     <div class="title">
-        {% load thumbnail %} {% thumbnail follower.user.profile.image "960x960" crop="center" upscale=True as im %}
-            <img style="border-radius: 100px; width: 4em; margin-right:20px;" align="left" 
-            vspace="5" hspace="5" src="{{ im.url }}" />
-        {% endthumbnail %}
+        <!-- {% if profile_is_not_image %}
+                {% load static %}<img style="border-radius: 100px; width: 4em; margin-right:20px;" align="left" 
+                vspace="5" hspace="5"  src="{% static "img/default.jpg" %}" />
+        {% else %} -->
+            {% load thumbnail %} {% thumbnail follower.user.profile.image "960x960" crop="center" upscale=True as im %}
+                <img style="border-radius: 100px; width: 4em; margin-right:20px;" align="left" 
+                vspace="5" hspace="5" src="{{ im.url }}" />
+            {% endthumbnail %}
+        <!-- {% endif %} -->
         <h3><a href="{% url 'posts:profile' follower.user.username %}">{{ follower.user.username }}</a></h3>
         <h6 class="published">{{ follower.user.get_full_name |linebreaksbr }}</h6><br>
     </div>

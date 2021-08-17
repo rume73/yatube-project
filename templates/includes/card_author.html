@@ -1,14 +1,14 @@
 <!-- Начало блока об авторе -->
 <div class="col-md-3 mb-3 mt-1">
                 <div class="card-body">
-                        {% load thumbnail %}
-                                {% if author.profile.image != null %}
-                                {% thumbnail author.profile.image "960x960" crop="center" upscale=True as im %}
-                                        <img class="card-img" style="border-radius: 120px;" src="{{ im.url }}" />
-                                {% endthumbnail %}
-                                {% else %}
-                                {% load static %}
+                                {% if profile_is_not_image %}
+                                        {% load static %}
                                         <img class="card-img" "960x960" crop="center" style="border-radius: 120px;"  src="{% static "img/default.jpg" %}" />
+                                {% else %}
+                                        {% load thumbnail %}
+                                        {% thumbnail author.profile.image "960x960" crop="center" upscale=True as im %}
+                                                <img class="card-img" style="border-radius: 120px;" src="{{ im.url }}" />
+                                        {% endthumbnail %}                                    
                                 {% endif %} 
                                 
                         <div class="h2" align="center">
@@ -20,7 +20,7 @@
                         {% if author.profile.bio != '' %}
                         <li class="list-group-item">
                                 <div class="h5 text-muted">
-                                        {{ author.profile.bio }}
+                                        {{ author.profile.bio|urlizetrunc:40 }}
                                 </div>
                         </li>
                         {% else %}
